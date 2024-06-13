@@ -39,22 +39,35 @@ const EditorPage = () => {
                 roomId,
                 username: location.state?.username,
             });
-
-            // Listening for joined event
+            
             socketRef.current.on(
                 ACTIONS.JOINED,
                 ({ clients, username, socketId }) => {
                     if (username !== location.state?.username) {
                         toast.success(`${username} joined the room.`);
-                        // console.log(`${username} joined`);
+                        console.log(`${username} joined`);
                     }
+                    console.log('Client',{clients});
                     setClients(clients);
                     socketRef.current.emit(ACTIONS.SYNC_CODE, {
                         code: codeRef.current,
                         socketId,
                     });
+                    console.log('Joined',{username});
                 }
             );
+
+            socketRef.current.on(ACTIONS.JOIN_ERROR, ({ error }) => {
+                toast('If you have joined with available username in the room, you need to join again with different one', {
+                    icon: '⚠️',
+                    style: {
+                        border: '1px solid #ffcc00',
+                        padding: '16px',
+                        color: 'black',
+                    },
+                });
+                
+            });
 
             // Listening for disconnected
             socketRef.current.on(
