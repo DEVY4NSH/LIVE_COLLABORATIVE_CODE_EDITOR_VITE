@@ -7,6 +7,6 @@ export const initSocket = async() => {
         timeout: 10000,
         transports: ['websocket'],
     };
-    console.log('Connecting to', import.meta.env.VITE_BACKEND_URL); 
+    // console.log('Connecting to', process.env.VITE_BACKEND_URL); 
     return io(import.meta.env.VITE_BACKEND_URL, options);
 }
