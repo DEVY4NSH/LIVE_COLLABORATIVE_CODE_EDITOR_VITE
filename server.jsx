@@ -3,7 +3,7 @@ const app = express();
 const http = require('http');
 const path = require('path');
 const { Server } = require('socket.io');
-// const ACTIONS = require('./src/actions.jsx');
+const ACTIONS = require('./src/serverActions.js');
 
 const server = http.createServer(app);
 const io = new Server(server);
@@ -14,8 +14,8 @@ app.use((req, res, next) => {
 });
 
 const userSocketMap = {};
-
 function getAllConnectedClients(roomId) {
+    // Map
     return Array.from(io.sockets.adapter.rooms.get(roomId) || []).map(
         (socketId) => {
             return {
@@ -29,43 +29,32 @@ function getAllConnectedClients(roomId) {
 io.on('connection', (socket) => {
     console.log('socket connected', socket.id);
 
-    socket.on('join', ({ roomId, username }) => {
-        const oldClients = getAllConnectedClients(roomId);
-        const isUsernameTaken = oldClients.some(client => client.username === username);
-        
-        // if (isUsernameTaken) {
-        //     socket.emit(ACTIONS.JOIN_ERROR, {
-        //         error: 'Username is already taken in this room',
-        //     });
-        //     return;
-        // }
-
+    socket.on(ACTIONS.JOIN, ({ roomId, username }) => {
         userSocketMap[socket.id] = username;
         socket.join(roomId);
         const clients = getAllConnectedClients(roomId);
-        console.log('Server',{clients});
-        // Notify existing clients about the new client
         clients.forEach(({ socketId }) => {
-                io.to(socketId).emit('joined', {
-                    clients,
-                    username,
-                    socketId: socket.id,
-                });
+            io.to(socketId).emit(ACTIONS.JOINED, {
+                clients,
+                username,
+                socketId: socket.id,
+            });
         });
     });
 
-    socket.on('code-change', ({ roomId, code }) => {
-        socket.in(roomId).emit('code-change', { code });
+    socket.on(ACTIONS.CODE_CHANGE, ({ roomId, code }) => {
+        socket.in(roomId).emit(ACTIONS.CODE_CHANGE, { code });
     });
 
-    socket.on('sync-code', ({ socketId, code }) => {
-        io.to(socketId).emit('code-change', { code });
+    socket.on(ACTIONS.SYNC_CODE, ({ socketId, code }) => {
+        // console.log(code);
+        io.to(socketId).emit(ACTIONS.CODE_CHANGE, { code });
     });
 
     socket.on('disconnecting', () => {
         const rooms = [...socket.rooms];
         rooms.forEach((roomId) => {
-            socket.in(roomId).emit('disconnected', {
+            socket.in(roomId).emit(ACTIONS.DISCONNECTED, {
                 socketId: socket.id,
                 username: userSocketMap[socket.id],
             });

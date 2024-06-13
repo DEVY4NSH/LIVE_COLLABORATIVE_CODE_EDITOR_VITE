@@ -24,6 +24,8 @@ const Editor = ({ settheme, socketRef, roomId, onCodeChange }) => {
             const { origin } = changes;
             const code = instance.getValue();
             onCodeChange(code);
+            console.log(code);
+            console.log(socketRef.current);
             if (origin !== 'setValue' && socketRef.current) {
                 console.log("changes in code");
                 socketRef.current.emit(ACTIONS.CODE_CHANGE, {
@@ -44,23 +46,22 @@ const Editor = ({ settheme, socketRef, roomId, onCodeChange }) => {
     }, [settheme, onCodeChange, roomId, socketRef]);
 
     useEffect(() => {
-        const handleCodeChange = ({ code }) => {
-            if (code !== null && editorRef.current) {
-                console.log("working here");
-                editorRef.current.setValue(code);
-            }
-        };
-
         if (socketRef.current) {
-            socketRef.current.on(ACTIONS.CODE_CHANGE, handleCodeChange);
+            socketRef.current.on(ACTIONS.CODE_CHANGE, ({ code }) => {
+                console.log(code);
+                if (code !== null) {
+                    editorRef.current.setValue(code);
+                }
+            });
         }
+
 
         return () => {
             if (socketRef.current) {
-                socketRef.current.off(ACTIONS.CODE_CHANGE, handleCodeChange);
+                socketRef.current.off(ACTIONS.CODE_CHANGE);
             }
         };
-    }, [socketRef]);
+    }, [socketRef.current]);
 
     return (
         <>
