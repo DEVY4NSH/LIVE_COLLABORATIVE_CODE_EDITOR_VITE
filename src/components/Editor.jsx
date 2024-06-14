@@ -50,9 +50,12 @@ const Editor = ({ settheme, socketRef, roomId, onCodeChange }) => {
             socketRef.current.on(ACTIONS.CODE_CHANGE, ({ code }) => {
                 console.log(code);
                 if (code !== null) {
-                    const scrollInfo = editorRef.current.getScrollInfo();
+                    const currentCursor = editorRef.current.getCursor();
+                    const currentScroll = editorRef.current.getScrollInfo();
+
                     editorRef.current.setValue(code);
-                    editorRef.current.scrollTo(scrollInfo.left, scrollInfo.top);
+                    editorRef.current.setCursor(currentCursor.line, code.length);
+                    editorRef.current.scrollTo(currentScroll.left, currentScroll.top);
                 }
             });
         }
