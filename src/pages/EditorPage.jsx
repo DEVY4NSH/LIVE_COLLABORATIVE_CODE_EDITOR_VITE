@@ -40,6 +40,17 @@ const EditorPage = () => {
                 username: location.state?.username,
             });
 
+            socketRef.current.on(ACTIONS.JOIN_ERROR, ({ error }) => {
+                toast('This is a warning message', {
+                    icon: '⚠️',
+                    style: {
+                        border: '1px solid #FFA500',
+                        padding: '16px',
+                        color: '#FFA500',
+                    },
+                });                
+                reactNavigator('/');
+            });
             // Listening for joined event
             socketRef.current.on(
                 ACTIONS.JOINED,

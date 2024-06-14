@@ -37,6 +37,17 @@ io.on('connection', (socket) => {
     console.log('socket connected', socket.id);
 
     socket.on(ACTIONS.JOIN, ({ roomId, username }) => {
+        const oldClients = getAllConnectedClients(roomId);
+        const isUsernameTaken = oldClients.some(client => client.username === username);
+        
+        if (isUsernameTaken) {
+            console.log(`Username ${username} is already taken in room ${roomId}`);
+            socket.emit(ACTIONS.JOIN_ERROR, {
+                error: 'Username is already taken in this room',
+            });
+            return;
+        }
+
         userSocketMap[socket.id] = username;
         socket.join(roomId);
         const clients = getAllConnectedClients(roomId);
