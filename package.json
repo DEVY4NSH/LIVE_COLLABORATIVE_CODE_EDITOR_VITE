@@ -29,7 +29,7 @@
         "start": "vite",
         "build": "vite build",
         "serve": "vite preview",
-        "start:server": "nodemon server.jsx"
+        "start:server": "nodemon server.js"
     },
     "eslintConfig": {
         "extends": [
