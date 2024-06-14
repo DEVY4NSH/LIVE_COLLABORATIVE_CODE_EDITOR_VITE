@@ -8,6 +8,5 @@ export const initSocket = async() => {
         transports: ['websocket'],
     };
     const url = import.meta.env.VITE_BACKEND_URL;
-    console.log('connecting to ',{url});
     return io(url, options);
 }
