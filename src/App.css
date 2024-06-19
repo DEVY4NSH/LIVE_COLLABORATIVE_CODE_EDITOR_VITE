@@ -157,7 +157,7 @@
 
 .menuOpen, .menuClosed {
   position: absolute;
-  top: 17px;
+  top: 0px;
   z-index: 1000;
   background-color: transparent;
   border: none;
@@ -171,6 +171,7 @@
   border: 2px solid #466b13;
   border-radius: 10px;
   padding: 5px;
+  top: 17px;
 }
 
 .menuOpen:hover {
