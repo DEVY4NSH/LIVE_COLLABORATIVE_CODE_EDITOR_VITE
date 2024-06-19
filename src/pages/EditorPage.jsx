@@ -41,6 +41,14 @@ const EditorPage = () => {
                 console.log('socket error', e);
                 toast.error('Socket connection failed, try again later.');
                 reactNavigator('/');
+                toast('Server may take a while to load, please wait for a minute before trying again', {
+                    icon: '⚠️',
+                    style: {
+                        border: '1px solid #FFA500',
+                        padding: '16px',
+                        color: '#FFA500',
+                    },
+                });
             }
 
             socketRef.current.emit(ACTIONS.JOIN, {
