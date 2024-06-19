@@ -6,10 +6,10 @@ const DescriptionBox = () => {
     const props = useSpring({
         from: { opacity: 0, transform: 'translateY(20px)' },
         to: { opacity: 1, transform: 'translateY(0px)' },
-        config: { duration: 1000 },
+        config: { duration: 200 },
     });
 
-    const description = "(Please use it on Desktop, currently UI is not fully compactible with mobiles) Hey there! Ever wished you could team up with your buddies and crack coding challenges together, in real-time? Well, now you can! Our platform brings this vision to life with our real-time code editor. It is completely free to use.                   HAPPY LEARNING"
+    const description = "(Please use it on Desktop, currently UI is not fully compactible with mobiles)         Hey there! Ever wished you could team up with your buddies and crack coding challenges together, in real-time? Well, now you can! Our platform brings this vision to life with our real-time code editor. It is completely free to use.                          HAPPY LEARNING"
 
     return (
         <animated.div style={props} className="description-box">
