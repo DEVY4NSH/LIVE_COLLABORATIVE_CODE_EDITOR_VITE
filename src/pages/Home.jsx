@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import DescriptionBox from './description_box';
 import {v4 as uuidV4} from 'uuid';
 import { useState } from 'react';
@@ -11,6 +11,16 @@ const Home = () => {
   const [roomId,SetRoomId] = useState("");
   const [username,setUsername] = useState("");
 
+  useEffect(() => {
+    toast('Server may take a while to load, please wait for a minute before trying again', {
+        icon: '⚠️',
+        style: {
+            border: '1px solid #FFA500',
+            padding: '16px',
+            color: '#FFA500',
+        },
+    });
+  }, []);
   const createNewRoom = (e) =>{
     e.preventDefault();
     const id = uuidV4();
