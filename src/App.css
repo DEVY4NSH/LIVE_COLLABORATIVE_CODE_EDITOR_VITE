@@ -301,6 +301,6 @@ input:checked + .slider:before {
     width: 320px;
   }
   .homeLogo{
-    width: 300px;
+    width: 320px;
   }
 }

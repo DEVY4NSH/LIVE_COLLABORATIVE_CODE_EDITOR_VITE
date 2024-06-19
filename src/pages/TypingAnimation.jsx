@@ -19,7 +19,7 @@ const TypingAnimation = ({ text }) => {
     const props = useSpring({
         opacity: 1,
         from: { opacity: 0 },
-        config: { duration: 200, },
+        config: { duration: 10, },
     });
 
     return (
