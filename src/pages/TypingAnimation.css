@@ -4,3 +4,9 @@
     white-space: pre-wrap;
     font-family: Arial, Helvetica, sans-serif;
 }
+
+@media screen and (max-width: 480px) {
+    .typing-animation{
+        font-size: 1.1em;
+    }
+}

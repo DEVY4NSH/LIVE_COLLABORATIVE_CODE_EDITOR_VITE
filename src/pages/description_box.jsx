@@ -13,7 +13,7 @@ const DescriptionBox = () => {
 
     return (
         <animated.div style={props} className="description-box">
-            <h1>Realtime Code Editor</h1>
+            <h1>Collaborative Code Editor</h1>
             <TypingAnimation text={description} />
         </animated.div>
     );

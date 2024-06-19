@@ -296,6 +296,9 @@ input:checked + .slider:before {
     height: fit-content;
     width: 320px;
   }
+  .description-box h1{
+    font-size: 2em; 
+  }
   .formWrapper{
     height: fit-content;
     width: 320px;
