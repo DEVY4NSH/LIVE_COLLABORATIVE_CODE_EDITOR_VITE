@@ -10,6 +10,17 @@ import ACTIONS from '../actions';
 
 const Editor = ({ settheme, socketRef, roomId, onCodeChange }) => {
     const editorRef = useRef(null);
+    const defaultText = `// Boilerplate for writing C++ code
+
+#include<bits/stdc++.h>
+
+using namespace std;
+
+int main(){
+    //write your C++ code here
+
+    return 0;
+}`;
 
     useEffect(() => {
         editorRef.current = Codemirror.fromTextArea(document.getElementById('codeEditor'), {
@@ -19,7 +30,7 @@ const Editor = ({ settheme, socketRef, roomId, onCodeChange }) => {
             autoCloseBrackets: true,
             lineNumbers: true,
         });
-
+        editorRef.current.setValue(defaultText);
         const handleChange = (instance, changes) => {
             const { origin } = changes;
             const code = instance.getValue();
@@ -70,7 +81,7 @@ const Editor = ({ settheme, socketRef, roomId, onCodeChange }) => {
 
     return (
         <>
-            <textarea id="codeEditor"></textarea>
+            <textarea id="codeEditor" defaultValue={defaultText}></textarea>
         </>
     );
 }
