@@ -8,7 +8,7 @@ function App() {
   return (
     <>
       <div>
-        <Toaster position="top-right" toastOptions={{
+        <Toaster position="top-center" toastOptions={{
           success:{
             theme:{
               primary:'#4aed88',

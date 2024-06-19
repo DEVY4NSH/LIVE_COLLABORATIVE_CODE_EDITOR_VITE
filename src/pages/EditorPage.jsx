@@ -4,6 +4,9 @@ import ACTIONS from '../actions.jsx';
 import Client from '../components/Clients';
 import Editor from '../components/Editor';
 import { initSocket } from '../socket';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBars, faTimes } from '@fortawesome/free-solid-svg-icons';
+
 import {
     useLocation,
     useNavigate,
@@ -22,6 +25,11 @@ const EditorPage = () => {
     const { roomId } = useParams();
     const reactNavigator = useNavigate();
     const [clients, setClients] = useState([]);
+    const [sideBarVisible,setSideBar] = useState(true);
+
+    const sideBarVisibility = () =>{
+        setSideBar((prev)=>(!prev));
+    }
 
     useEffect(() => {
         const init = async () => {
@@ -116,32 +124,6 @@ const EditorPage = () => {
 
     return (
         <div className="mainwrap">
-            <div className="aside">
-                <div className="asideInner">
-                  <div className='logosort'>
-                    <span className='ChangeTheme'>{theme}</span>
-                    <label className="switch">
-                      <input type="checkbox" checked={isToggled} onChange={changeTheme} />
-                      <span className="slider round"></span>
-                    </label>
-                  </div>
-                  <h3>Connected</h3>
-                  <div className="clientsList">
-                      {clients.map((client) => (
-                          <Client
-                              key={client.socketId}
-                              username={client.username}
-                          />
-                      ))}
-                  </div>
-                </div>
-                <button className="btn copyBtn" onClick={copyRoomId}>
-                    Copy ROOM ID
-                </button>
-                <button className="btn leaveBtn" onClick={leaveRoom}>
-                    Leave
-                </button>
-            </div>
             <div className="editorWrap">
                 <Editor
                     settheme={theme}
@@ -152,6 +134,44 @@ const EditorPage = () => {
                     }}
                 />
             </div>
+            {sideBarVisible ? (
+                <div className="aside">
+                    <div className="asideInner">
+                        <div className='logosort'>
+                            <span className='ChangeTheme'>{theme}</span>
+                            <label className="switch">
+                                <input type="checkbox" checked={isToggled} onChange={changeTheme} />
+                                <span className="slider round"></span>
+                            </label>
+                        </div>
+                        <button className="menuOpen btn" onClick={sideBarVisibility}>
+                            <FontAwesomeIcon icon={faTimes} size="lg" />
+                        </button>
+                        <h3>Connected</h3>
+                        <div className="clientsList">
+                            {clients.map((client) => (
+                                <Client
+                                    key={client.socketId}
+                                    username={client.username}
+                                />
+                            ))}
+                        </div>
+                    </div>
+                    <button className="btn copyBtn" onClick={copyRoomId}>
+                        Copy ROOM ID
+                    </button>
+                    <button className="btn leaveBtn" onClick={leaveRoom}>
+                        Leave
+                    </button>
+                </div>
+            ) : null}
+            {
+                !sideBarVisible && 
+                <button className="menuClosed btn" onClick={sideBarVisibility}>
+                    <FontAwesomeIcon icon={faBars} size="lg"/>
+                </button>
+            }
+            
         </div>
     );
 };
