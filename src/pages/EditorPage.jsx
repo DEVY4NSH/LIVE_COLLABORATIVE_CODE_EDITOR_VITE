@@ -41,7 +41,7 @@ const EditorPage = () => {
                 console.log('socket error', e);
                 toast.error('Socket connection failed, try again later.');
                 reactNavigator('/');
-                toast('Server was dormant for a while ! It would take a minute to start', {
+                toast('Sorry for the inconvinience. Server was dormant for a while ! It would take a minute to start.', {
                     icon: '⚠️',
                     style: {
                         border: '1px solid #FFA500',
